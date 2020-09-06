@@ -80,7 +80,7 @@ public class StartButtonView extends JPanel implements MainContract.StartButtonV
     }
 }
 ```
-The Controller reacts to events from View communicates with Model and decide what to show on the View.
+The Controller reacts to events from View, communicates with Model and decide what to show on the View.
 
 ## Why Swing?
 
@@ -100,7 +100,7 @@ I always using Lombok. It saves me a lot of code.
 
 ## Why Spock?
 
-Are you using JUnit? I tried Spock and JUnit became inconvenient for me. Unit tests are more readable.
+Are you using JUnit? I tried Spock, I wrote some tests. After that JUnit became inconvenient for me. Unit tests are more readable.
 ```groovy
 class RandomGeneratorToDiceConverterTest extends Specification {
 
