@@ -1,0 +1,101 @@
+plugins {
+    id 'groovy'
+    id 'java'
+    id "application"
+    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
+}
+
+group 'pl.komorowskidev'
+version '1.0.0'
+
+def projectPath = "$buildDir/$project.name" + "_v" + "$version"
+def binPath = "$projectPath/bin"
+
+springBoot {
+    buildInfo()
+}
+
+application{
+    mainClassName('pl.komorowskidev.solutionsswing.ApplicationLauncher')
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    testImplementation group: 'org.codehaus.groovy', name: 'groovy', version: '3.0.5'
+    testImplementation group: 'org.spockframework', name: 'spock-core', version: '2.0-M3-groovy-3.0'
+    testImplementation group: 'cglib', name: 'cglib-nodep', version: '3.3.0'
+    testImplementation group: 'org.objenesis', name: 'objenesis', version: '3.1'
+    testImplementation group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
+}
+
+installBootDist.destinationDir = file("$projectPath")
+
+task copyFiles {
+    doLast{
+        copy {
+            from "README.md"
+            into "$projectPath"
+        }
+    }
+}
+
+task applicationWithoutConsole {
+    doLast {
+        def winStartScript = "$binPath" + "/" + "$project.name" + ".bat"
+        def winStartScriptCopy = "$binPath" + "/" + "$project.name" + "WithoutConsole.bat"
+        modifyFile(winStartScript, winStartScriptCopy) {
+            if(it.contains("java.exe")){
+                return it.replace("java.exe", "javaw.exe")
+            }
+            else if(it.startsWith("\"%JAVA_EXE%\" %DEFAULT_JVM_OPTS%")){
+                return "start \"\" /b " + it
+            }
+            else{
+                return it
+            }
+        }
+    }
+}
+
+task buildApplication {
+    group = "advanced"
+    description = "building application"
+    bootBuildInfo.dependsOn clean
+    installBootDist.dependsOn build
+    copyFiles.dependsOn installBootDist
+    applicationWithoutConsole.dependsOn copyFiles
+    buildApplication.dependsOn applicationWithoutConsole
+}
+
+def modifyFile(srcFile, destFile, Closure c={println String it; return it}) {
+    StringBuffer ret = new StringBuffer()
+    File src = new File(srcFile)
+    File dest = new File(destFile)
+
+    src.withReader{reader->
+        reader.eachLine{
+            def line=c(it)
+            if(line != null) {
+                ret.append(line)
+                ret.append("\n")
+            } else {
+                ret.append("")
+            }
+        }
+    }
+    dest.write(ret.toString())
+}
