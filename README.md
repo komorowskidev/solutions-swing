@@ -163,4 +163,4 @@ Live long and prosper with Spock Framework :-)
 
 ## Why Gradle?
 
-I don't like XML files so I using Gradle instead of Maven. It's much more readable tool.
+Gradle code is more readable than Maven's XML files.
