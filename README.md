@@ -80,12 +80,12 @@ public class StartButtonView extends JPanel implements MainContract.StartButtonV
     }
 }
 ```
-The Controller reacts to events from View, communicates with Model and decide what to show on the View.
+The Controller reacts to events from View, communicates with Model and decide what to show in the View.
 
 ## Why Swing?
 
-I decided to use Swing library instead of JavaFX because it needs JVM only, so user have to installed only Java Runtime Environment.
-To look application better I used the UIManager.
+I decided to use Swing library instead of JavaFX because it needs JVM only, so users have to install only the Java Runtime Environment.
+For better application look I used the UIManager.
 ```java
 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 ```
@@ -96,7 +96,7 @@ I used SpringBoot to simply connect classes with @Autowired by Constructor. This
 
 ## Why Lombok?
 
-I always using Lombok. It saves me a lot of code.
+I always using Lombok. It saves me a lot of coding.
 
 ## Why Spock?
 
