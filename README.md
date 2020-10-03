@@ -85,7 +85,7 @@ The Controller reacts to events from View, communicates with Model and decide wh
 ## Why Swing?
 
 I decided to use Swing library instead of JavaFX because it needs JVM only, so users have to install only the Java Runtime Environment.
-For better application look I used the UIManager.
+For a better application look I used the UIManager.
 ```java
 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 ```
@@ -96,11 +96,11 @@ I used SpringBoot to simply connect classes with @Autowired by Constructor. This
 
 ## Why Lombok?
 
-I always using Lombok. It saves me a lot of coding.
+I always use Lombok. It saves me a lot of coding.
 
 ## Why Spock?
 
-Are you using JUnit? I tried Spock, I wrote some tests. After that JUnit became inconvenient for me. Unit tests are more readable.
+Are you using JUnit? I tried Spock, I wrote some unit tests. After that JUnit seemed inconvenient to me. Unit tests are more readable.
 ```groovy
 class RandomGeneratorToDiceConverterTest extends Specification {
 
